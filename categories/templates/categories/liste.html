@@ -17,7 +17,6 @@
                     {{ categorie.nom }}
                     <a class="btn btn-warning" href="{% url 'modifier_categorie' categorie.id %}">🖋</a>
                     <a class="btn btn-danger" href="{% url 'supprimer_categorie' categorie.id %}">🗑️</a>
-                    <a class="btn btn-danger" href="{% url 'voir_films' categorie.id %}">O</a>
                 </li>
             {% endfor %}
         </ul>
