@@ -1,0 +1,13 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Catégories de Films{% endblock %}</title>
+        <link rel="stylesheet" href="{% static 'categories/style.css' %}">
+    </head>
+<body>
+    {% block content %}{% endblock %}
+</body>
+</html>

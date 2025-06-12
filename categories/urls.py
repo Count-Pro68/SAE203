@@ -7,3 +7,5 @@ urlpatterns = [
     path('modifier/<int:id>/', views.modifier_categorie, name='modifier_categorie'),
     path('supprimer/<int:id>/', views.supprimer_categorie, name='supprimer_categorie'),
 ]
+
+# urls

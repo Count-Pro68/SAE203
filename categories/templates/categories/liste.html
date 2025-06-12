@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %}Liste des Catégories{% endblock %}
+
+<!-- Correspond à la page principale -->
+
+{% block content %}
+
+<div class="card">
+    <h1>🎬 Catégories</h1>
+    <a class="btn" href="{% url 'ajouter_categorie' %}">➕ Ajouter</a>
+
+    {% if categories %}
+        <ul style="text-align: left; margin-top: 1rem;">
+            {% for categorie in categories %}
+                <li style="margin-bottom: 0.5rem;">
+                    {{ categorie.nom }}
+                    <a class="btn btn-warning" href="{% url 'modifier_categorie' categorie.id %}">🖋</a>
+                    <a class="btn btn-danger" href="{% url 'supprimer_categorie' categorie.id %}">🗑️</a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Aucune catégorie.</p>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}Supprimer{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h2>🗑️ Supprimer la catégorie</h2>
+    <p>Voulez-vous vraiment supprimer <strong>{{ categorie.nom }}</strong> ?</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit">Oui, supprimer</button>
+    </form>
+    <a href="{% url 'liste_categories' %}" class="btn btn-secondary">Annuler</a>
+</div>
+{% endblock %}
