@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}Liste des Films{% endblock %}
+
+{% block content %}
+
+<div class="card">
+    <h1>🎬 Films</h1>
+    <a class="btn" href="{% url 'ajouter_film' %}">➕ Ajouter un film</a>
+    <ul>
+        {% for film in films %}
+        <li>
+            <strong>{{ film.titre }}</strong> ({{ film.annee_sortie }}) – {{ film.realisateur }}<br>
+            Catégorie : {{ film.categorie.nom }}<br>
+            <img src="{{ film.affiche.url }}" alt="Affiche" width="120"><br>
+            <a href="{% url 'modifier_film' film.id %}">✏️ Modifier</a>
+            <a href="{% url 'supprimer_film' film.id %}">🗑️ Supprimer</a>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}
