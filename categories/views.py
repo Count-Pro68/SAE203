@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import CategorieFilm
+from .models import CategorieFilm, Film
 from .forms import CategorieFilmForm, FilmForm
 
 #--------- CRUD CategorieFilm ---------#
@@ -44,7 +44,7 @@ def supprimer_categorie(request, id):
 # Liste des films
 def liste_films(request):
     films = Film.objects.all()
-    return render(request, 'categories/films/liste.html', {'films': films})
+    return render(request, 'films/liste.html', {'films': films})
 
 # Ajouter un film
 def ajouter_film(request):
@@ -52,7 +52,7 @@ def ajouter_film(request):
     if form.is_valid():
         form.save()
         return redirect('liste_films')
-    return render(request, 'categories/films/formulaire.html', {'form': form, 'titre': 'Ajouter un film'})
+    return render(request, 'films/formulaire.html', {'form': form, 'titre': 'Ajouter un film'})
 
 # Modifier un film
 def modifier_film(request, film_id):
@@ -61,7 +61,7 @@ def modifier_film(request, film_id):
     if form.is_valid():
         form.save()
         return redirect('liste_films')
-    return render(request, 'categories/films/formulaire.html', {'form': form, 'titre': 'Modifier le film'})
+    return render(request, 'films/formulaire.html', {'form': form, 'titre': 'Modifier le film'})
 
 # Supprimer un film
 def supprimer_film(request, film_id):
@@ -69,4 +69,4 @@ def supprimer_film(request, film_id):
     if request.method == 'POST':
         film.delete()
         return redirect('liste_films')
-    return render(request, 'categories/films/supprimer.html', {'film': film})
+    return render(request, 'films/supprimer.html', {'film': film})

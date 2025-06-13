@@ -11,7 +11,7 @@ class CategorieFilm(models.Model):
 class Film(models.Model):
     titre = models.CharField(max_length=100)
     annee_sortie = models.PositiveIntegerField()
-    affiche = models.ImageField(upload_to='affiches/')
+    affiche = models.ImageField(upload_to='affiches/', )
     realisateur = models.CharField(max_length=100)
     categorie = models.ForeignKey(CategorieFilm, on_delete=models.CASCADE)
 
