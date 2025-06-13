@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import CategorieFilm, Film
 from .forms import CategorieFilmForm, FilmForm
+from django.shortcuts import redirect
 
 #--------- CRUD CategorieFilm ---------#
 
@@ -13,11 +14,11 @@ def ajouter_categorie(request):
     if request.method == 'POST':
         form = CategorieFilmForm(request.POST)
         if form.is_valid():
-            form.save()
-            return redirect('liste_categories')
+            categorie = form.save()
+            return redirect('detail_categorie', categorie_id=categorie.id)
     else:
         form = CategorieFilmForm()
-    return render(request, 'categories/formulaire.html', {'form': form, 'titre': 'Ajouter une catégorie'})
+    return render(request, 'categories/formulaire.html', {'form': form})
 
 def modifier_categorie(request, id):
     categorie = get_object_or_404(CategorieFilm, pk=id)
@@ -37,6 +38,25 @@ def supprimer_categorie(request, id):
         return redirect('liste_categories')
     return render(request, 'categories/supprimer.html', {'categorie': categorie})
 
+def detail_categorie(request, categorie_id):
+    categorie = get_object_or_404(CategorieFilm, id=categorie_id)
+    films = Film.objects.filter(categorie=categorie)
+
+    if request.method == 'POST':
+        form = FilmForm(request.POST, request.FILES)
+        if form.is_valid():
+            film = form.save(commit=False)
+            film.categorie = categorie
+            film.save()
+            return redirect('detail_categorie', categorie_id=categorie.id)
+    else:
+        form = FilmForm()
+
+    return render(request, 'categories/detail_categorie.html', {
+        'categorie': categorie,
+        'films': films,
+        'form': form
+    })
 
 #--------- CRUD Film ---------#
 

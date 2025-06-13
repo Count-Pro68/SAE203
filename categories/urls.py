@@ -9,6 +9,9 @@ urlpatterns = [
     path('modifier/<int:id>/', views.modifier_categorie, name='modifier_categorie'),
     path('supprimer/<int:id>/', views.supprimer_categorie, name='supprimer_categorie'),
 
+    # lien
+    path('categorie/<int:categorie_id>/', views.detail_categorie, name='detail_categorie'),
+
     # Films
     path('films/', views.liste_films, name='liste_films'),
     path('films/ajouter/', views.ajouter_film, name='ajouter_film'),

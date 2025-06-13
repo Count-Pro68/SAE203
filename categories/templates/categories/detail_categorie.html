@@ -1,0 +1,19 @@
+<h2>Catégorie : {{ categorie.nom }}</h2>
+
+<p>{{ categorie.descriptif }}</p>
+
+<h3>Ajouter un film à cette catégorie</h3>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Enregistrer le film</button>
+</form>
+
+<h3>Films dans cette catégorie</h3>
+<ul>
+    {% for film in films %}
+        <li><strong>{{ film.titre }}</strong> – {{ film.annee_sortie }} – Réalisé par {{ film.realisateur }}</li>
+    {% empty %}
+        <li>Aucun film dans cette catégorie.</li>
+    {% endfor %}
+</ul>
