@@ -13,10 +13,11 @@
     {% if categories %}
         <ul style="text-align: left; margin-top: 1rem;">
             {% for categorie in categories %}
-                <li style="margin-bottom: 0.5rem;">
-                    {{ categorie.nom }}
-                    <a class="btn btn-warning" href="{% url 'modifier_categorie' categorie.id %}">🖋</a>
-                    <a class="btn btn-danger" href="{% url 'supprimer_categorie' categorie.id %}">🗑️</a>
+                <li>
+                    <strong>{{ categorie.nom }}</strong> - {{ categorie.descriptif }}
+                    <a href="{% url 'modifier_categorie' categorie.pk %}">✏️</a>
+                    <a href="{% url 'supprimer_categorie' categorie.pk %}">❌</a>
+                    <a href="{% url 'films_par_categorie' categorie.pk %}">🎬</a>
                 </li>
             {% endfor %}
         </ul>

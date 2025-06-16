@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}Films dans {{ categorie.nom }}{% endblock %}
+
+{% block content %}
+<h2>Catégorie : {{ categorie.nom }}</h2>
+<p>{{ categorie.descriptif }}</p>
+
+<h3>Ajouter un film à cette catégorie</h3>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">🎥 Enregistrer le film</button>
+</form>
+
+<h3>Films dans cette catégorie</h3>
+<ul>
+    {% for film in films %}
+        <li>
+            <strong>{{ film.titre }}</strong> ({{ film.annee_sortie }}) — {{ film.realisateur }}
+            <a href="{% url 'modifier_film' film.pk %}">✏️</a>
+            <a href="{% url 'supprimer_film' film.pk %}">❌</a>
+        </li>
+    {% empty %}
+        <li>Aucun film dans cette catégorie.</li>
+    {% endfor %}
+</ul>
+
+<a href="{% url 'liste_categories' %}">⬅️ Retour aux catégories</a>
+{% endblock %}

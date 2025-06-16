@@ -90,3 +90,57 @@ def supprimer_film(request, film_id):
         film.delete()
         return redirect('liste_films')
     return render(request, 'films/supprimer.html', {'film': film})
+
+
+
+
+
+#___________________________ESSAI_________________________#
+
+
+from .models import Film, CategorieFilm
+from .forms import FilmForm
+
+from django.shortcuts import get_object_or_404, redirect
+
+def films_par_categorie(request, pk):
+    categorie = get_object_or_404(CategorieFilm, pk=pk)
+    films = Film.objects.filter(categorie=categorie)
+
+    if request.method == 'POST':
+        form = FilmForm(request.POST, request.FILES)
+        if form.is_valid():
+            film = form.save(commit=False)
+            film.categorie = categorie
+            film.save()
+            return redirect('films_par_categorie', pk=categorie.pk)
+    else:
+        form = FilmForm()
+
+    return render(request, 'categories/films_par_categorie.html', {
+        'categorie': categorie,
+        'films': films,
+        'form': form
+    })
+
+
+def modifier_film(request, pk):
+    film = get_object_or_404(Film, pk=pk)
+    if request.method == 'POST':
+        form = FilmForm(request.POST, request.FILES, instance=film)
+        if form.is_valid():
+            form.save()
+            return redirect('films_par_categorie', pk=film.categorie.pk)
+    else:
+        form = FilmForm(instance=film)
+    return render(request, 'categories/film_form.html', {
+        'form': form,
+        'titre': f'Modifier le film : {film.titre}'
+    })
+
+
+def supprimer_film(request, pk):
+    film = get_object_or_404(Film, pk=pk)
+    categorie_id = film.categorie.pk
+    film.delete()
+    return redirect('films_par_categorie', pk=categorie_id)
