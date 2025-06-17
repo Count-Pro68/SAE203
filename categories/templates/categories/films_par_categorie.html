@@ -3,28 +3,40 @@
 {% block title %}Films dans {{ categorie.nom }}{% endblock %}
 
 {% block content %}
-<h2>Catégorie : {{ categorie.nom }}</h2>
-<p>{{ categorie.descriptif }}</p>
+<div style="background-color: #243447; color: white; padding: 2rem; border-radius: 10px; max-width: 600px; margin: 2rem auto; box-shadow: 0 0 10px rgba(0,0,0,0.3);">
 
-<h3>Ajouter un film à cette catégorie</h3>
-<form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">🎥 Enregistrer le film</button>
-</form>
+    <h2 style="display: flex; align-items: center; gap: 10px;">
+        🎬 Catégorie : <span style="font-weight: bold;">{{ categorie.nom }}</span>
+    </h2>
+    <p style="font-style: italic;">{{ categorie.descriptif }}</p>
 
-<h3>Films dans cette catégorie</h3>
-<ul>
-    {% for film in films %}
-        <li>
-            <strong>{{ film.titre }}</strong> ({{ film.annee_sortie }}) — {{ film.realisateur }}
-            <a href="{% url 'modifier_film' film.pk %}">✏️</a>
-            <a href="{% url 'supprimer_film' film.pk %}">❌</a>
-        </li>
-    {% empty %}
-        <li>Aucun film dans cette catégorie.</li>
-    {% endfor %}
-</ul>
+    <hr style="margin: 1rem 0;">
 
-<a href="{% url 'liste_categories' %}">⬅️ Retour aux catégories</a>
+    <h3>➕ Ajouter un film à cette catégorie</h3>
+    <form method="post" enctype="multipart/form-data" style="margin-bottom: 2rem;">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" style="background-color: #e74c3c; color: white; border: none; padding: 8px 16px; border-radius: 5px; cursor: pointer;">
+            🎥 Enregistrer le film
+        </button>
+    </form>
+
+    <h3>🎞️ Films dans cette catégorie</h3>
+    <ul style="list-style: none; padding-left: 0;">
+        {% for film in films %}
+            <li style="margin-bottom: 10px;">
+                <strong>{{ film.titre }}</strong> ({{ film.annee_sortie }}) — {{ film.realisateur }}
+                <a href="{% url 'modifier_film' film.pk %}" title="Modifier" style="margin-left: 10px;">✏️</a>
+                <a href="{% url 'supprimer_film' film.pk %}" title="Supprimer">❌</a>
+            </li>
+        {% empty %}
+            <li>Aucun film dans cette catégorie.</li>
+        {% endfor %}
+    </ul>
+
+    <a href="{% url 'liste_categories' %}" style="display: inline-block; margin-top: 1.5rem; text-decoration: none; color: white;">
+        ⬅️ Retour aux catégories
+    </a>
+
+</div>
 {% endblock %}
